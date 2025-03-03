@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="The Pitfalls of KV Cache Compression">
+  <meta name="keywords"
+    content="KV Cache Compression, Large Language Models, LLMs, Transformers, Machine Learning, NLP, Artificial Intelligence">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Pitfalls of KV Cache Compression</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">The Pitfalls of KV Cache Compression</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://www.linkedin.com/in/alex-chen-5692ab208/">Alex
+                  Chen,</a></span>
+              <span class="author-block"><a href="https://web.cs.ucla.edu/~renatolg/">Renato Lui
+                  Geh,</a></span>
+              <span class="author-block"><a href="https://aditya-grover.github.io/">Aditya Grover,</a></span>
+              <span class="author-block"><a href="https://web.cs.ucla.edu/~guyvdb/">Guy Van den Broeck,</a></span>
+              <span class="author-block"><a href="https://danielmisrael.github.io/">Daniel Israel</a></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of California, Los Angeles</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2510.00231" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Itisalex2/pitfalls-of-kv-cache-compression"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <!-- TL;DR Section -->
+          <div class="content is-size-5 has-text-centered">
+            <em><strong>TL;DR:</strong> For prompts with multiple instructions, KV cache compression can lead to some
+              instructions being ignored. We propose
+              simple changes to KV cache eviction policies that fix this.</em>
+          </div>
+          <h3 class="title is-4">Standard vs Fair Eviction Policies</h3>
+          <div class="publication-image">
+            <img src="./static/images/figure_1.png" alt="Standard vs Fair Eviction Policies" class="responsive-image"
+              loop autoplay style="width: 100%;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              KV cache compression promises increased throughput and efficiency with negligible loss in performance.
+              While the gains
+              in throughput are indisputable and
+              recent literature has indeed shown minimal degradation on particular benchmarks,
+              in general the consequences of compression in realistic scenarios such as multiinstruction prompting have
+              been
+              insufficiently studied. In this paper, we identify
+              several pitfalls practitioners should be aware of when deploying KV cache compressed LLMs. Importantly, we
+              show that
+              certain instructions degrade much more
+              rapidly with compression, effectively causing them to be completely ignored by
+              the LLM. As a practical example of that, we highlight system prompt leakage as a
+              case study, empirically showing the impact of compression on leakage and general
+              instruction following. We show several factors that play a role in prompt leakage:
+              compression method, instruction order, and KV eviction bias. We then propose
+              simple changes to KV cache eviction policies that can reduce the impact of these
+              factors and improve the overall performance in multi-instruction tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{chen2025pitfallskvcachecompression,
+      title={The Pitfalls of KV Cache Compression},
+      author={Alex Chen and Renato Geh and Aditya Grover and Guy Van den Broeck and Daniel Israel},
+      year={2025},
+      eprint={2510.00231},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2510.00231},
+      }
+</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://nerfies.github.io/">Nerfies project page</a>.
+            </p>
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+              You are free to borrow the of this website, we just ask that you link back to this page in the footer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
