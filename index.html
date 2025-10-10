@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="The Pitfalls of KV Cache Compression">
+  <meta name="description" content="Planned Diffusion: A Hybrid Approach to Fast and High-Quality Text Generation">
   <meta name="keywords"
-    content="KV Cache Compression, Large Language Models, LLMs, Transformers, Machine Learning, NLP, Artificial Intelligence">
+    content="Planned Diffusion, Large Language Models, LLMs, Diffusion Models, Autoregressive, Text Generation, Machine Learning, NLP, Artificial Intelligence">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Pitfalls of KV Cache Compression</title>
+  <title>Planned Diffusion</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.png">
+  <link rel="icon" href="data:,">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -32,20 +32,27 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">The Pitfalls of KV Cache Compression</h1>
+            <h1 class="title is-1 publication-title">Planned Diffusion</h1>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><a href="https://www.linkedin.com/in/alex-chen-5692ab208/">Alex
-                  Chen,</a></span>
-              <span class="author-block"><a href="https://web.cs.ucla.edu/~renatolg/">Renato Lui
-                  Geh,</a></span>
-              <span class="author-block"><a href="https://aditya-grover.github.io/">Aditya Grover,</a></span>
-              <span class="author-block"><a href="https://web.cs.ucla.edu/~guyvdb/">Guy Van den Broeck,</a></span>
-              <span class="author-block"><a href="https://danielmisrael.github.io/">Daniel Israel</a></span>
+              <span class="author-block"><a href="https://danielmisrael.github.io/">Daniel Israel</a><sup>1*</sup>,</span>
+              <span class="author-block"><a href="https://www.tjin.org/">Tian Jin</a><sup>2*</sup>,</span>
+              <span class="author-block"><a href="https://elliecheng.com/">Ellie Cheng</a><sup>2</sup>,</span>
+              <span class="author-block"><a href="https://web.cs.ucla.edu/~guyvdb/">Guy Van den Broeck</a><sup>1</sup>,</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://aditya-grover.github.io/">Aditya Grover</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://people.csail.mit.edu/suvinay/">Suvinay Subramanian</a><sup>3</sup>,</span>
+              <span class="author-block"><a href="https://people.csail.mit.edu/mcarbin/">Michael Carbin</a><sup>2</sup></span>
             </div>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">University of California, Los Angeles</span>
+            <div class="is-size-5 publication-authors" style="margin-top: 0.5rem;">
+              <span class="author-block" style="margin: 0 1rem;"><sup>1</sup>UCLA</span>
+              <span class="author-block" style="margin: 0 1rem;"><sup>2</sup>MIT</span>
+              <span class="author-block" style="margin: 0 1rem;"><sup>3</sup>Google</span>
+            </div>
+            <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
+              <span class="author-block"><sup>*</sup>Equal contribution</span>
             </div>
           </div>
         </div>
@@ -53,18 +60,18 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <div class="publication-links">
+              <!-- Paper Link -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2510.00231" class="external-link button is-normal is-rounded is-dark">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" style="pointer-events: none; opacity: 0.6;">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
-                  <span>arXiv</span>
+                  <span>arXiv (Coming Soon)</span>
                 </a>
               </span>
-              <!-- Code Link. -->
+              <!-- Code Link -->
               <span class="link-block">
-                <a href="https://github.com/Itisalex2/pitfalls-of-kv-cache-compression"
-                  class="external-link button is-normal is-rounded is-dark">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" style="pointer-events: none; opacity: 0.6;">
                   <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
+                  <span>Code (Coming Soon)</span>
                 </a>
               </span>
             </div>
@@ -74,19 +81,16 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="padding-top: 0rem; margin-top: -2rem;">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <!-- TL;DR Section -->
           <div class="content is-size-5 has-text-centered">
-            <em><strong>TL;DR:</strong> For prompts with multiple instructions, KV cache compression can lead to some
-              instructions being ignored. We propose
-              simple changes to KV cache eviction policies that fix this.</em>
+            <em><strong>TL;DR:</strong> Planned diffusion speeds up LLM inference by denoising spans of text in parallel from a previously generated plan.</em>
           </div>
-          <h3 class="title is-4">Standard vs Fair Eviction Policies</h3>
           <div class="publication-image">
-            <img src="./static/images/figure_1.png" alt="Standard vs Fair Eviction Policies" class="responsive-image"
+            <img src="./static/images/intro-fig.png" alt="Planned Diffusion Overview" class="responsive-image"
               loop autoplay style="width: 100%;">
           </div>
         </div>
@@ -98,23 +102,13 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              KV cache compression promises increased throughput and efficiency with negligible loss in performance.
-              While the gains
-              in throughput are indisputable and
-              recent literature has indeed shown minimal degradation on particular benchmarks,
-              in general the consequences of compression in realistic scenarios such as multiinstruction prompting have
-              been
-              insufficiently studied. In this paper, we identify
-              several pitfalls practitioners should be aware of when deploying KV cache compressed LLMs. Importantly, we
-              show that
-              certain instructions degrade much more
-              rapidly with compression, effectively causing them to be completely ignored by
-              the LLM. As a practical example of that, we highlight system prompt leakage as a
-              case study, empirically showing the impact of compression on leakage and general
-              instruction following. We show several factors that play a role in prompt leakage:
-              compression method, instruction order, and KV eviction bias. We then propose
-              simple changes to KV cache eviction policies that can reduce the impact of these
-              factors and improve the overall performance in multi-instruction tasks.
+              A central challenge in large language model inference is the trade-off between generation speed and output quality. Autoregressive models produce high-quality text but generate tokens sequentially. 
+              Diffusion models can generate tokens in parallel but often need many iterations to match the same quality. 
+              We propose <em>planned diffusion</em>, a hybrid method that combines the strengths of both paradigms.
+              Planned diffusion works in two stages: first, the model creates a short autoregressive outline that breaks the output into smaller, independent spans. 
+              Second, the model generates these spans simultaneously using diffusion. This approach expands the speed–quality Pareto frontier and provides a practical path to faster, high-quality text generation.
+              On AlpacaEval, a suite of 805 instruction-following prompts, planned diffusion achieves Pareto-optimal trade-off between quality and latency, achieving 1.84x speedup over autoregressive generation with only a 6.8% drop in win rate.
+              Our sensitivity analysis confirms that the internal planning of our model is reliable and offers tunable control over the trade-off between generation speed and quality.
             </p>
           </div>
         </div>
@@ -126,14 +120,11 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@misc{chen2025pitfallskvcachecompression,
-      title={The Pitfalls of KV Cache Compression},
-      author={Alex Chen and Renato Geh and Aditya Grover and Guy Van den Broeck and Daniel Israel},
+      <pre><code>@article{planneddiffusion2025,
+      title={Planned Diffusion},
+      author={[Authors to be added]},
       year={2025},
-      eprint={2510.00231},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2510.00231},
+      journal={[To be updated]},
       }
 </code></pre>
     </div>
